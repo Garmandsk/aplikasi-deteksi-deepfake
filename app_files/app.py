@@ -14,7 +14,7 @@ st.set_page_config(
 # Samakan dengan input shape saat training di Colab!
 IMG_HEIGHT = 224  # [UBAH DISINI] Misal: 128, 150, atau 224
 IMG_WIDTH = 224   # [UBAH DISINI]
-MODEL_PATH = 'model_deepfake_final.keras'
+MODEL_PATH = 'model_deepfake_ori.keras'
 
 # --- FUNGSI LOAD MODEL (Cached agar cepat) ---
 @st.cache_resource
