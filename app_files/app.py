@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
+import os
 
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(
@@ -14,7 +15,11 @@ st.set_page_config(
 # Samakan dengan input shape saat training di Colab!
 IMG_HEIGHT = 224  # [UBAH DISINI] Misal: 128, 150, atau 224
 IMG_WIDTH = 224   # [UBAH DISINI]
-MODEL_PATH = './model_deepfake_ori.keras'
+
+# Dapatkan path absolut dari folder tempat app.py berada
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Gabungkan dengan nama file model
+MODEL_PATH = os.path.join(current_dir, 'model_deepfake_ori.keras')
 
 # --- FUNGSI LOAD MODEL (Cached agar cepat) ---
 @st.cache_resource
@@ -50,7 +55,9 @@ try:
     model = load_prediction_model()
     st.success("✅ Model berhasil dimuat!")
 except Exception as e:
-    st.error(f"❌ Gagal memuat model. Pastikan file '{MODEL_PATH}' ada di folder yang sama.")
+    # TAMPILKAN ERROR ASLINYA DISINI
+    st.error(f"❌ Gagal memuat model.")
+    st.error(f"Pesan Error Python: {e}") 
     st.stop()
 
 # Widget Upload File
