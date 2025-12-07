@@ -30,7 +30,7 @@ def load_prediction_model():
 # --- FUNGSI PRE-PROCESSING GAMBAR ---
 def import_and_predict(image_data, model):
     # 1. Resize gambar sesuai input model
-    image = ImageOps.fit(image_data, (IMG_WIDTH, IMG_HEIGHT), Image.ANTIALIAS)
+    image = ImageOps.fit(image_data, (IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
     
     # 2. Convert ke Array
     img_array = np.asarray(image)
