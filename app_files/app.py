@@ -29,6 +29,8 @@ def load_prediction_model():
 
 # --- FUNGSI PRE-PROCESSING GAMBAR ---
 def import_and_predict(image_data, model):
+    image_data = image_data.convert("RGB")
+
     # 1. Resize gambar sesuai input model
     image = ImageOps.fit(image_data, (IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
     
