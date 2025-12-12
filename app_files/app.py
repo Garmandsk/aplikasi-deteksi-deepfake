@@ -214,17 +214,13 @@ elif menu == "Edukasi":
     
     with tab1:
         st.subheader("Cara Mengenali Deepfake")
-        col1, col2 = st.columns(2)
-        with col1:
-             st.image("https://media.istockphoto.com/id/1322220443/vector/deepfake-quantum-grade-ai-artificial-intelligence-face-scan-recognition-identify-person.jpg?s=612x612&w=0&k=20&c=uJ9WqY_1tYyLhG0wO_XwbK-_yB5z_gHkGjXv_iX0n_w=", caption="AI Scanning")
-        with col2:
-            st.markdown("""
-            1. **Mata Jarang Berkedip:** Manusia berkedip tiap 2-10 detik.
-            2. **Sinkronisasi Bibir:** Gerakan bibir tidak pas dengan suara.
-            3. **Tekstur Kulit:** Terlalu halus atau *blur* di area perbatasan wajah.
-            4. **Garis Wajah:** Garis wajah tidak alami.
-            5. **Pencahayaan:** Pencahayaan tidak sesuai kondisi sekitar
-            """)
+        st.markdown("""
+          1. **Mata Jarang Berkedip:** Manusia berkedip tiap 2-10 detik.
+          2. **Sinkronisasi Bibir:** Gerakan bibir tidak pas dengan suara.
+          3. **Tekstur Kulit:** Terlalu halus atau *blur* di area perbatasan wajah.
+          4. **Garis Wajah:** Garis wajah tidak alami.
+          5. **Pencahayaan:** Pencahayaan tidak sesuai kondisi sekitar
+        """)
             
     with tab2:
         st.subheader("Langkah Pencegahan")
