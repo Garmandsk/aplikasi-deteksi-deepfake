@@ -1,4 +1,5 @@
 streamlit
-tensorflow-cpu
-pillow
+supabase
+tensorflow
 numpy
+Pillow
