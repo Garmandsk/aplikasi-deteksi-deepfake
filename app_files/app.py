@@ -111,26 +111,18 @@ if menu == "Beranda":
     
     with col1:
         st.write("""
-        ### Selamat Datang di Benteng Digital Kita.
-        
-        Deepfake dan penipuan AI berkembang setiap detik. Sekolah mungkin menolak sosialisasi fisik, 
-        tapi **kejahatan digital tidak mengenal batas tembok sekolah.**
-        
         Aplikasi ini hadir dengan konsep **Community Based Security**:
-        1. **Deteksi:** Cek keaslian pesan dan video.
-        2. **Edukasi:** Pahami cara kerja musuh.
-        3. **Kontribusi:** Upload temuan deepfake baru untuk melatih AI kita agar makin pintar.
+        1. **Deteksi:** Cek keaslian gambar wajah.
+        2. **Edukasi:** Pahami cara kerja Deepfake.
+        3. **Kontribusi:** Upload temuan Deepfake baru untuk melatih AI kita agar makin pintar.
         """)
-        st.warning("⚠️ Proyek ini adalah inisiatif sosial mahasiswa untuk melawan disinformasi.")
-        
-    with col2:
-        st.image("https://img.freepik.com/free-vector/artificial-intelligence-cibernetics-particle-brain_53876-139368.jpg", use_container_width=True)
+        st.warning("⚠️ Proyek ini adalah inisiatif sosial mahasiswa untuk melawan Deepfake yang disalahgunakan.")
 
 # ==========================================
 # HALAMAN: DETEKSI VISUAL
 # ==========================================
 elif menu == "Deteksi Visual":
-    st.header("🎭 Detektor Deepfake")
+    st.header("🎭 Deteksi Visual")
     st.write("Upload gambar wajah untuk memeriksa keaslian.")
     
     model = None
@@ -184,23 +176,23 @@ elif menu == "Deteksi Visual":
 # HALAMAN: KONTRIBUSI 
 # ==========================================
 elif menu == "Kontribusi": 
-    st.header("☁️ Kontribusi Dataset Nasional")
+    st.header("☁️ Kontribusi Deepfake")
     st.info("Data yang Anda upload akan disimpan ke Cloud Storage untuk melatih ulang AI.")
     
     if not supabase_ready:
-        st.error("⚠️ Koneksi Supabase bermasalah. Cek internet atau API Key.")
+        st.error("⚠️ Koneksi bermasalah. Cek internet atau API Key.")
     
     with st.form("kontribusi_cloud"):
         nama = st.text_input("Nama Kontributor (Opsional):", "Anonim")
         jenis = st.selectbox("Jenis Temuan:", ["Deepfake Wajah", "Voice Cloning", "Hoaks Video"])
-        file_upload = st.file_uploader("Upload Bukti:", type=['jpg', 'png', 'mp4'])
+        file_upload = st.file_uploader("Upload Deepfake:", type=['jpg', 'png', 'mp4'])
         ket = st.text_area("Keterangan:")
         
-        btn_kirim = st.form_submit_button("🚀 Upload ke Cloud")
+        btn_kirim = st.form_submit_button("🚀 Upload")
         
         if btn_kirim:
             if file_upload:
-                with st.spinner("Mengirim data ke server Supabase..."):
+                with st.spinner("Mengirim data ke cloud..."):
                     sukses, info = upload_to_supabase(file_upload, nama, jenis)
                     
                     if sukses:
@@ -230,6 +222,8 @@ elif menu == "Edukasi":
             1. **Mata Jarang Berkedip:** Manusia berkedip tiap 2-10 detik.
             2. **Sinkronisasi Bibir:** Gerakan bibir tidak pas dengan suara.
             3. **Tekstur Kulit:** Terlalu halus atau *blur* di area perbatasan wajah.
+            4. **Garis Wajah:** Garis wajah tidak alami.
+            5. **Pencahayaan:** Pencahayaan tidak sesuai kondisi sekitar
             """)
             
     with tab2:
@@ -237,5 +231,6 @@ elif menu == "Edukasi":
         st.markdown("""
         - **Verifikasi:** Jangan asal share.
         - **Sandi Keluarga:** Sepakati kode rahasia untuk validasi telepon darurat.
-        - **Lapor:** Gunakan fitur 'Kontribusi' di aplikasi ini.
+        - **Deteksi:** Gunakan fitur 'Deteksi' di aplikasi ini.
+        - **Kontribusi:** Gunakan fitur 'Kontribusi' agar sistem deteksi aplikasi meningkat seiring berkembangnya teknologi Deepfake.
         """)
