@@ -58,5 +58,6 @@ Proyek ini dikembangkan oleh mahasiswa Universitas Sumatera Utara sebagai bagian
 * **Orang 2:** Divay Imam Syuhada
 * **Orang 3:** Gerti Armanda Sembiring
 * **Orang 4:** Kevin Swandana
+* **Orang 5:** Gregorian Sinaga
 
 ---
