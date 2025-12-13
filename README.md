@@ -33,7 +33,7 @@ Berikut adalah penjelasan isi folder dalam proyek ini:
 
 1.  **Clone Repositori:**
     ```bash
-    git clone [https://github.com/Garmandsk/aplikasi-deteksi-deepfake](https://github.com/Garmandsk/aplikasi-deteksi-deepfake)
+    git clone https://github.com/Garmandsk/aplikasi-deteksi-deepfake
     cd aplikasi-deteksi-deepfake
     ```
 
