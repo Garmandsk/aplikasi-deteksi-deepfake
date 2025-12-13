@@ -105,7 +105,7 @@ with st.sidebar:
 # HALAMAN: BERANDA
 # ==========================================
 if menu == "Beranda":
-    st.title("🛡️ CyberGuard: Dari Kita, Untuk Kita")
+    st.title("🛡️ ADD: Dari Kita, Untuk Kita")
     
     col1, col2 = st.columns([2, 1])
     
