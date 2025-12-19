@@ -190,6 +190,7 @@ if menu == "Beranda":
         if st.button("Mulai Deteksi ->"):
             st.session_state['page_selection'] = "Deteksi Visual"
             st.rerun()
+        st.link_button("📂 Feedback Aplikasi", "https://forms.gle/BiasriBofMjGVmjN8", help="Klik untuk mengisi kuesioner")
 
 # ==========================================
 # HALAMAN: DETEKSI VISUAL
