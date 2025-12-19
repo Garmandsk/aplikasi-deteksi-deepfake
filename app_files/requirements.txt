@@ -3,3 +3,4 @@ supabase
 tensorflow
 numpy
 Pillow
+cryptography

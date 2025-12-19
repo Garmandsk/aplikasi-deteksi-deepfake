@@ -106,8 +106,8 @@ def import_and_predict(image_data, model):
     return prediction
 
 # --- 4. KONFIGURASI SUPABASE ---
-SUPABASE_URL = "https://otbcyjmlhrayctgaihop.supabase.co" 
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90YmN5am1saHJheWN0Z2FpaG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0ODA3OTMsImV4cCI6MjA4MTA1Njc5M30.bhvXZM9yqZon6YYkR8TPaHH5HvAUNN86Cp4OGfiGc6g" 
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 BUCKET_NAME = "dataset-warga"
 
 try:
