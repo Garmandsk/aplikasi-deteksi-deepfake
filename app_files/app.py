@@ -4,7 +4,7 @@ import uuid
 import os
 import numpy as np
 import tensorflow as tf
-import hashlib # Tambahan untuk Hashing
+import hashlib 
 from PIL import Image, ImageOps
 from supabase import create_client, Client
 
@@ -16,7 +16,7 @@ from cryptography.hazmat.backends import default_backend
 
 # --- 1. KONFIGURASI HALAMAN & SESSION STATE ---
 st.set_page_config(
-    page_title="CyberGuard: AI Pelindung Publik",
+    page_title="ADD: Dari Kita Untuk Kita",
     page_icon="🛡️",
     layout="wide"
 )
@@ -26,7 +26,6 @@ if 'page_selection' not in st.session_state:
     st.session_state['page_selection'] = 'Beranda'
 
 # --- 2. MODUL KRIPTOGRAFI (HYBRID & HASH) ---
-
 @st.cache_resource
 def get_rsa_keys():
     """
@@ -62,7 +61,6 @@ def hybrid_encrypt(plaintext, public_key):
     # 2. Enkripsi Data pakai AES
     cipher_aes = Cipher(algorithms.AES(session_key), modes.CFB(iv), backend=default_backend())
     encryptor = cipher_aes.encryptor()
-    # Pastikan plaintext string, ubah ke bytes
     encrypted_data = encryptor.update(str(plaintext).encode()) + encryptor.finalize()
 
     # 3. Enkripsi Session Key pakai RSA
@@ -91,7 +89,6 @@ MODEL_PATH = os.path.join(current_dir, 'model_deepfake_ori.keras')
 @st.cache_resource
 def load_prediction_model():
     if not os.path.exists(MODEL_PATH):
-        # Fallback dummy model jika file belum ada (biar app gak crash pas testing)
         return None
     model = tf.keras.models.load_model(MODEL_PATH)
     return model
@@ -119,13 +116,15 @@ except Exception as e:
 
 def upload_to_supabase(uploaded_file, encrypted_metadata_str, jenis_laporan):
     """
-    Upload file gambar + Metadata yang SUDAH TERENKRIPSI
+    Upload file gambar ke Storage DAN simpan metadata terenkripsi ke Database Table.
     """
     if not supabase_ready:
         return False, "Koneksi Supabase gagal."
 
     try:
+        # --- PROSES 1: UPLOAD FILE KE STORAGE ---
         file_ext = uploaded_file.name.split('.')[-1]
+        # Nama file unik biar tidak bentrok
         unique_filename = f"{jenis_laporan.replace(' ', '_')}_{uuid.uuid4()}.{file_ext}"
         file_bytes = uploaded_file.getvalue()
         path_on_cloud = f"uploads/{unique_filename}"
@@ -137,9 +136,19 @@ def upload_to_supabase(uploaded_file, encrypted_metadata_str, jenis_laporan):
             file_options={"content-type": uploaded_file.type}
         )
         
-        # Note: Idealnya encrypted_metadata_str disimpan di Table Database Supabase.
-        # Karena ini demo storage, kita anggap sukses terkirim.
+        # --- PROSES 2: INSERT DATA KE TABEL laporan_warga ---
+        
+        data_to_insert = {
+            "jenis_laporan": jenis_laporan,
+            "image_path": path_on_cloud,      # Link ke gambar
+            "encrypted_metadata": encrypted_metadata_str # Paket enkripsi (RSA+AES)
+        }
+
+        # Eksekusi Insert ke tabel 'laporan_warga'
+        supabase.table("laporan_warga").insert(data_to_insert).execute()
+
         return True, path_on_cloud
+
     except Exception as e:
         return False, str(e)
 
@@ -239,11 +248,10 @@ elif menu == "Deteksi Visual":
                         st.write("Jika Anda yakin gambar ini sebenarnya **Deepfake** tapi terdeteksi **Asli**, tolong laporkan agar kami bisa melatih ulang AI kami.")
                         
                         if st.button("🚨 Saya Yakin Ini Fake -> Lapor Kontribusi"):
-                            st.session_state['page_selection'] = "Kontribusi" # Pindah Halaman
-                            st.rerun() # Refresh Halaman
+                            st.session_state['page_selection'] = "Kontribusi" 
+                            st.rerun() 
 
                     else:
-                        # KASUS: TERDETEKSI FAKE
                         label = "FAKE (Deepfake)"
                         score = (1 - confidence) * 100
                         color = "#ff4b4b"
@@ -253,7 +261,7 @@ elif menu == "Deteksi Visual":
                         st.error("Waspada! Gambar ini memiliki indikasi kuat manipulasi wajah.")
 
 # ==========================================
-# HALAMAN: KONTRIBUSI (HYBRID CRYPTO)
+# HALAMAN: KONTRIBUSI 
 # ==========================================
 elif menu == "Kontribusi": 
     st.header("☁️ Kontribusi Aman (Secure Crowdsourcing)")
@@ -270,7 +278,6 @@ elif menu == "Kontribusi":
         file_upload = st.file_uploader("Upload Bukti Deepfake:", type=['jpg', 'png', 'mp4'])
         ket = st.text_area("Keterangan Tambahan:")
         
-        # Checkbox Persetujuan
         st.caption("Dengan mengirim, Anda setuju data digunakan untuk penelitian.")
 
         btn_kirim = st.form_submit_button("🔒 Enkripsi & Upload")
@@ -294,7 +301,7 @@ elif menu == "Kontribusi":
                 # Enkripsi
                 encrypted_package = hybrid_encrypt(data_sensitif, app_public_key)
                 
-                # Tampilkan Demo Visualisasi Kripto (Sesuai Permintaan)
+                # Tampilkan Demo Visualisasi Kripto
                 col_demo1, col_demo2, col_demo3 = st.columns(3)
                 with col_demo1:
                     st.info("🗝️ Session Key (AES)")
@@ -310,7 +317,6 @@ elif menu == "Kontribusi":
                     st.code(encrypted_package['ciphertext'][:15] + "...", language="text")
 
                 # 3. Upload ke Cloud
-                # Kita kirim data paket enkripsi dalam bentuk string
                 encrypted_str = str(encrypted_package)
                 
                 sukses, info = upload_to_supabase(file_upload, encrypted_str, jenis)
