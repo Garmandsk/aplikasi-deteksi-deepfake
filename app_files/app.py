@@ -200,6 +200,7 @@ if menu == "Beranda":
             st.session_state['page_selection'] = "Deteksi Visual"
             st.rerun()
         st.link_button("📂 Feedback Aplikasi", "https://forms.gle/BiasriBofMjGVmjN8", help="Klik untuk mengisi kuesioner")
+        st.link_button("📂 Source Code Aplikasi", "https://github.com/Garmandsk/aplikasi-deteksi-deepfake", help="Klik untuk melihat source code aplikasi. CTT: Pengembangan bersifat bebas")
 
 # ==========================================
 # HALAMAN: DETEKSI VISUAL
